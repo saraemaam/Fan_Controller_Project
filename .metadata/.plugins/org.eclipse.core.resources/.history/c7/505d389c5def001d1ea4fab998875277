@@ -1,0 +1,79 @@
+/**************************************************************************************************
+ *  Name        : Fan Controller System
+ *  Description : Fan Controller system with the specifications listed below:
+                  The aim of this project is to design a temperature-controlled
+                  fan using ATmega32 microcontroller, in which the fan is automatically
+                  turned ON or OFF according to the temperature. Use ATmega32 Microcontroller with frequency 1Mhz
+ *  Author      : Sarah
+ ***************************************************************************************************/
+#include"adc.h"
+#include"motor_module.h"
+#include"lcd.h"
+#include"lm35_sensor.h"
+#include<avr/interrupt.h>
+
+int main(void)
+{
+	/* Initial configuration for DC motor and ADC */
+	ADC_ConfigType ADC_configuration = { ADC_INTERNAL_2_56V,ADC_FCPU_8};
+	DC_Motor_Config DC_configuration = { CW_DIRECTION };
+
+	/*Initialize LCD*/
+	LCD_init();
+
+	/*Initialize ADC module*/
+	ADC_init(&ADC_configuration);
+
+	/*Initialize DC Motor*/
+	DcMotor_init();
+
+	DcMotor_Rotate(&DC_configuration,50);
+
+	LCD_displayString("Temp is =  C");
+
+	while(1)
+	{
+		temp = LM35_getTemperature();
+
+		/* Display the temperature value every time at same position */
+		LCD_moveCursor(0,10);
+		if(temp >= 100)
+		{
+			LCD_intgerToString(temp);
+		}
+		else
+		{
+			LCD_intgerToString(temp);
+			/* In case the digital value is two or one digits print space in the next digit place */
+			LCD_displayString(' ');
+
+		}
+
+		/*
+a.If the temperature is less than 30C turn off the fan.
+b. If the temperature is greater than or equal 30C turn on the fan with 25% of its
+maximum speed.
+c. If the temperature is greater than or equal 60C turn on the fan with 50% of its
+maximum speed.
+d. If the temperature is greater than or equal 90C turn on the fan with 75% of its
+maximum speed
+If the temperature is greater than or equal 120C turn on the fan with 100% of its
+maximum speed.
+		 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	}
+
+}

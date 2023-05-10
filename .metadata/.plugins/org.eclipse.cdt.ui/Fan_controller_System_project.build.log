@@ -1,0 +1,41 @@
+22:27:41 **** Incremental Build of configuration Debug for project Fan_controller_System_project ****
+make all 
+Building file: ../Fan_controller_system.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=1000000UL -MMD -MP -MF"Fan_controller_system.d" -MT"Fan_controller_system.o" -c -o "Fan_controller_system.o" "../Fan_controller_system.c"
+../Fan_controller_system.c: In function 'main':
+../Fan_controller_system.c:46: warning: pointer targets in passing argument 1 of 'LCD_displayString' differ in signedness
+../Fan_controller_system.c:54: warning: pointer targets in passing argument 1 of 'LCD_displayString' differ in signedness
+../Fan_controller_system.c:62: warning: pointer targets in passing argument 1 of 'LCD_displayString' differ in signedness
+../Fan_controller_system.c:70: warning: pointer targets in passing argument 1 of 'LCD_displayString' differ in signedness
+../Fan_controller_system.c:77: warning: pointer targets in passing argument 1 of 'LCD_displayString' differ in signedness
+../Fan_controller_system.c:92: warning: passing argument 1 of 'LCD_displayString' makes pointer from integer without a cast
+Finished building: ../Fan_controller_system.c
+ 
+Building target: Fan_controller_System_project.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Fan_controller_System_project.map -mmcu=atmega32 -o "Fan_controller_System_project.elf"  ./Fan_controller_system.o ./adc.o ./gpio.o ./lcd.o ./lm35_sensor.o ./motor_module.o ./timer0_module.o   
+Finished building target: Fan_controller_System_project.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S Fan_controller_System_project.elf  >"Fan_controller_System_project.lss"
+Finished building: Fan_controller_System_project.lss
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega32 Fan_controller_System_project.elf
+AVR Memory Usage
+----------------
+Device: atmega32
+
+Program:    9936 bytes (30.3% Full)
+(.text + .data + .bootloader)
+
+Data:        302 bytes (14.7% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+
+22:27:42 Build Finished. 0 errors, 6 warnings. (took 516ms)
+

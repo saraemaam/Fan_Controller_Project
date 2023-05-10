@@ -1,0 +1,55 @@
+/****************************************************************
+ * Module: Motor
+ *
+ * File Name: motor_module.h
+ *
+ * Description: Source file for motor module
+ *
+ * Author: Sarah
+ ******************************************************************/
+
+#include "motor_module.h"
+#include "gpio.h"
+#include "timer0_module.h"
+
+/* Module initialization make pins output*/
+void DcMotor_init(void)
+{
+	GPIO_setupPinDirection(MOTOR_PIN1_PIN2_PORT,MOTOR_PIN1,PIN_OUTPUT);
+	GPIO_setupPinDirection(MOTOR_PIN1_PIN2_PORT,MOTOR_PIN2,PIN_OUTPUT);
+
+	/* Motor is stop at the beginning */
+	GPIO_writePin(MOTOR_PIN1_PIN2_PORT,MOTOR_PIN1,MOTOR_IS_OFF);
+	GPIO_writePin(MOTOR_PIN1_PIN2_PORT,MOTOR_PIN2,MOTOR_IS_OFF);
+
+}
+
+
+/* Set Motor Speed, direction CW or ACW or stop Motor*/
+void DcMotor_Rotate(const DC_Motor_Config *state,uint8 speed){
+
+	if (state->DC_State == CW_DIRECTION)
+	{
+		/*Clockwise direction*/
+		GPIO_writePin(MOTOR_PIN1_PIN2_PORT,MOTOR_PIN1,LOGIC_LOW);
+		GPIO_writePin(MOTOR_PIN1_PIN2_PORT,MOTOR_PIN2,LOGIC_HIGH);
+	}
+
+	else if (state->DC_State == ACW_DIRECTION){
+		/*Anti Clockwise*/
+		GPIO_writePin(MOTOR_PIN1_PIN2_PORT,MOTOR_PIN1,LOGIC_HIGH);
+		GPIO_writePin(MOTOR_PIN1_PIN2_PORT,MOTOR_PIN2,LOGIC_LOW);
+
+	}
+	else
+	{
+		/*Otherwise Stop Motor*/
+		GPIO_writePin(MOTOR_PIN1_PIN2_PORT,MOTOR_PIN1,LOGIC_LOW);
+		GPIO_writePin(MOTOR_PIN1_PIN2_PORT,MOTOR_PIN2,LOGIC_LOW);
+	}
+
+	/* Set up the speed of the motor using PWM signal*/
+	PWM_Timer0_Init(speed);
+
+}
+

@@ -1,0 +1,51 @@
+/**************************************************************************************************
+ *  Name        :
+ *  Description :
+ *  Author      : Sarah
+ ***************************************************************************************************/
+
+#include"adc.h"
+#include"motor_module.h"
+#include"lcd.h"
+#include"lm35_sensor.h"
+#include<avr/interrupt.h>
+
+int main(void)
+{
+	uint8 temp = 0;
+
+	ADC_ConfigType ADC_configuration = { ADC_INTERNAL_2_56V,ADC_FCPU_8};
+	DC_Motor_Config DC_configuration = { CW_DIRECTION };
+
+	/*Initialize LCD*/
+	LCD_init();
+	/*Initialize ADC module*/
+	ADC_init(&ADC_configuration);
+	/*Initialize DC Motor*/
+	DcMotor_init();
+	//DcMotor_Rotate(&DC_configuration,255);
+
+	LCD_displayString("Temp is =  C");
+
+	while(1)
+	{
+		temp = LM35_getTemperature();
+
+		/* Display the temperature value every time at same position */
+		LCD_moveCursor(0,10);
+		if(temp >= 100)
+		{
+			LCD_intgerToString(temp);
+		}
+		else
+		{
+			LCD_intgerToString(temp);
+			/* In case the digital value is two or one digits print space in the next digit place */
+			LCD_displayString(' ');
+
+		}
+
+
+	}
+
+}
